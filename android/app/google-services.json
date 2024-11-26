@@ -12,7 +12,12 @@
           "package_name": "com.example.learningplatform"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "490153343889-ankj4q12q5rcaqhp9h7j62ch1au1u78r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCLL1oJOkjIjMAm2PvN0Q-eazdgCH31oCQ"
@@ -20,7 +25,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "490153343889-ankj4q12q5rcaqhp9h7j62ch1au1u78r.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "490153343889-7br5tnub8pj1tjfo6cq46n53t2cqmifi.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.learningplatform"
+              }
+            }
+          ]
         }
       }
     }

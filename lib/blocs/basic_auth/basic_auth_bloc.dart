@@ -17,7 +17,6 @@ class BasicAuthBloc extends Bloc<BasicAuthEvent, BasicAuthState> {
 
   void _emailChanged(EmailChanged event, Emitter<BasicAuthState> emit) {
     emit (state.copyWith(email: event.email));
-    print('New Value of Email : ${event.email}'); 
   }
 
   void _passwordChanged(PasswordChanged event, Emitter<BasicAuthState> emit) {
