@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:learningplatform/bloc/chat_bloc.dart';
+import 'package:learningplatform/blocs/chat/chat_bloc.dart';
 import 'package:learningplatform/ui/chatbotscreen.dart';
 import 'package:learningplatform/ui/homescreen.dart';
 import 'package:learningplatform/ui/splashscreen.dart';

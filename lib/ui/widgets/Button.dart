@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class ButtonWidget extends StatelessWidget {
-  final String routeName;
   final String labelText;
+  final void Function() onPressedFunction;
   const ButtonWidget(
-      {super.key, required this.routeName, required this.labelText});
+      {super.key, required this.labelText, required this.onPressedFunction});
 
   @override
   Widget build(BuildContext context) {
@@ -12,9 +12,7 @@ class ButtonWidget extends StatelessWidget {
       width: 150,
       height: 40,
       child: ElevatedButton(
-        onPressed: () {
-          Navigator.pushNamed(context, routeName);
-        },
+        onPressed: onPressedFunction,
         child: Text(labelText),
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all(Color(0xFF06094C)),

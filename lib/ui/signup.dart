@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:learningplatform/blocs/basic_auth/basic_auth_bloc.dart';
+import 'package:learningplatform/repos/auth_repo.dart';
 import 'package:learningplatform/ui/widgets/Button.dart';
 import 'package:learningplatform/ui/widgets/InputField.dart';
 
@@ -10,88 +13,82 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  bool _isPasswordObscured = false;
-  bool _isConfirmPasswordObscured = false;
-  TextEditingController fullNameController = TextEditingController();
+  bool _isPasswordObscured = true;
+
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmPasswordController =
+      TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(
-              'assets/logo-dark.png',
-              width: size.width * .4,
-              height: size.height * .4,
-            ),
-            SizedBox(
-              height: size.height * 0.1,
-            ),
-            InputFieldWidget(obscureText: false, labelText: 'Full Name', controller: fullNameController),
-            SizedBox(
-              height: size.height * 0.02,
-            ),
-            InputFieldWidget(obscureText: false, labelText: 'Email Address', controller: fullNameController),
-            SizedBox(
-              height: size.height * 0.02,
-            ),
-            InputFieldWidget(obscureText: false, labelText: 'Password', controller: fullNameController, iconButton: IconButton(
-                    icon: Icon(
-                      _isPasswordObscured
-                          ? Icons.visibility_off
-                          : Icons.visibility,
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        _isPasswordObscured = !_isPasswordObscured;
-                      });
-                    },
-                  ),),
-            SizedBox(
-              height: size.height * 0.02,
-            ),
-            InputFieldWidget(obscureText: false, labelText: 'Confirm Password', controller: fullNameController, iconButton: IconButton(
-                    icon: Icon(
-                      _isConfirmPasswordObscured
-                          ? Icons.visibility_off
-                          : Icons.visibility,
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        _isConfirmPasswordObscured = !_isConfirmPasswordObscured;
-                      });
-                    },
-                  ),),
-                        SizedBox(
-              height: size.height * 0.02,
-            ),
-            ButtonWidget(routeName: '/home', labelText: 'Sign Up'),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "You have an account?",
-                  style: TextStyle(
-                    color: Color.fromARGB(255, 146, 149, 154),
-                    fontSize: size.width * 0.03,
+
+    return BlocProvider(
+      create: (context) => BasicAuthBloc(AuthRepo()),
+      child: Scaffold(
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                'assets/logo-dark.png',
+                width: size.width * .4,
+                height: size.height * .4,
+              ),
+              SizedBox(height: size.height * 0.1),
+              InputFieldWidget(
+                obscureText: false,
+                labelText: 'Email Address',
+                onChangedFunction: (value) =>
+                    context.read<BasicAuthBloc>().add(EmailChanged(value)),
+              ),
+              SizedBox(height: size.height * 0.02),
+              InputFieldWidget(
+                obscureText: _isPasswordObscured,
+                labelText: 'Password',
+                iconButton: IconButton(
+                  icon: Icon(
+                    _isPasswordObscured
+                        ? Icons.visibility_off
+                        : Icons.visibility,
                   ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    // Add navigation to Login Page here
+                  onPressed: () {
+                    setState(() {
+                      _isPasswordObscured = !_isPasswordObscured;
+                    });
                   },
-                  child: Text(
-                    " Sign In",
+                ),
+                onChangedFunction: (value) =>
+                    context.read<BasicAuthBloc>().add(PasswordChanged(value)),
+              ),
+              SizedBox(height: size.height * 0.02),
+              ButtonWidget(
+                  labelText: 'Sign Up',
+                  onPressedFunction: () =>
+                      context.read<BasicAuthBloc>().add(FormSubmitted())),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "You have an account?",
                     style: TextStyle(
-                      color: Color(0xFFFBAA1B),
+                      color: Color.fromARGB(255, 146, 149, 154),
+                      fontSize: size.width * 0.03,
                     ),
                   ),
-                ),
-              ],
-            ),
-          ],
+                  GestureDetector(
+                    onTap: () {},
+                    child: Text(
+                      " Sign In",
+                      style: TextStyle(
+                        color: Color(0xFFFBAA1B),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

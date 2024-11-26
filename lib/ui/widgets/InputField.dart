@@ -5,16 +5,14 @@ class InputFieldWidget extends StatelessWidget {
   final bool obscureText;
   final String labelText;
   final IconButton? iconButton;
-  final TextEditingController controller;
-  final String? Function(String?)? validator;
+  final void Function(String)? onChangedFunction;
 
   const InputFieldWidget({
     super.key,
     required this.obscureText,
     required this.labelText,
     this.iconButton,
-    required this.controller,
-    this.validator,
+    this.onChangedFunction,
   });
 
   @override
@@ -22,8 +20,8 @@ class InputFieldWidget extends StatelessWidget {
     return Container(
       width: 400,
       child: TextField(
+        onChanged: onChangedFunction,
         obscureText: obscureText,
-        controller: controller,
         decoration: InputDecoration(
           labelText: labelText,
           border: OutlineInputBorder(
