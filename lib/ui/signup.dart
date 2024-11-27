@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:learningplatform/blocs/basic_auth/basic_auth_bloc.dart';
 import 'package:learningplatform/blocs/google_auth/google_auth_bloc.dart';
+import 'package:learningplatform/const/assets.dart';
 import 'package:learningplatform/repos/auth_repo.dart';
 import 'package:learningplatform/ui/widgets/Button.dart';
 import 'package:learningplatform/ui/widgets/GoogleSignUpButton.dart';
@@ -26,7 +27,8 @@ class _SignUpPageState extends State<SignUpPage> {
         BlocProvider(
           create: (context) => BasicAuthBloc(AuthRepo()),
         ),
-        BlocProvider(create: (context) => GoogleAuthBloc(AuthRepo())),
+        BlocProvider(
+          create: (context) => GoogleAuthBloc(AuthRepo())),
       ],
       child: Scaffold(
         body: BlocListener<GoogleAuthBloc, GoogleAuthState>(
@@ -40,7 +42,7 @@ class _SignUpPageState extends State<SignUpPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Image.asset(
-                  'assets/logo-dark.png',
+                  Assets.logo,
                   width: size.width * .4,
                   height: size.height * .4,
                 ),
