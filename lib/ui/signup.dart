@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:learningplatform/blocs/basic_auth/basic_auth_bloc.dart';
-import 'package:learningplatform/blocs/google_auth/google_auth_bloc.dart';
 import 'package:learningplatform/const/assets.dart';
 import 'package:learningplatform/repos/auth_repo.dart';
 import 'package:learningplatform/ui/widgets/Button.dart';
-import 'package:learningplatform/ui/widgets/GoogleSignUpButton.dart';
 import 'package:learningplatform/ui/widgets/InputField.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -22,86 +20,76 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
 
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (context) => BasicAuthBloc(AuthRepo()),
-        ),
-        BlocProvider(
-          create: (context) => GoogleAuthBloc(AuthRepo())),
-      ],
+    return BlocProvider(
+      create: (context) => BasicAuthBloc(AuthRepo()),
       child: Scaffold(
-        body: BlocListener<GoogleAuthBloc, GoogleAuthState>(
-          listener: (context, state) {
-            if (state is GoogleAuthSuccess) {
-              Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
-            }
-          },
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset(
-                  Assets.logo,
-                  width: size.width * .4,
-                  height: size.height * .4,
-                ),
-                SizedBox(height: size.height * 0.1),
-                InputFieldWidget(
-                  obscureText: false,
-                  labelText: 'Email Address',
-                  onChangedFunction: (value) =>
-                      context.read<BasicAuthBloc>().add(EmailChanged(value)),
-                ),
-                SizedBox(height: size.height * 0.02),
-                InputFieldWidget(
-                  obscureText: _isPasswordObscured,
-                  labelText: 'Password',
-                  iconButton: IconButton(
-                    icon: Icon(
-                      _isPasswordObscured
-                          ? Icons.visibility_off
-                          : Icons.visibility,
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        _isPasswordObscured = !_isPasswordObscured;
-                      });
-                    },
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                Assets.logo,
+                width: size.width * .4,
+                height: size.height * .4,
+              ),
+              SizedBox(height: size.height * 0.1),
+              InputFieldWidget(
+                obscureText: false,
+                labelText: 'Email Address',
+                onChangedFunction: (value) =>
+                    context.read<BasicAuthBloc>().add(EmailChanged(value)),
+              ),
+              SizedBox(height: size.height * 0.02),
+              InputFieldWidget(
+                obscureText: _isPasswordObscured,
+                labelText: 'Password',
+                iconButton: IconButton(
+                  icon: Icon(
+                    _isPasswordObscured
+                        ? Icons.visibility_off
+                        : Icons.visibility,
                   ),
-                  onChangedFunction: (value) =>
-                      context.read<BasicAuthBloc>().add(PasswordChanged(value)),
+                  onPressed: () {
+                    setState(() {
+                      _isPasswordObscured = !_isPasswordObscured;
+                    });
+                  },
                 ),
-                SizedBox(height: size.height * 0.02),
-                ButtonWidget(
-                    labelText: 'Sign Up',
-                    onPressedFunction: () =>
-                        context.read<BasicAuthBloc>().add(FormSubmitted())),
-                SizedBox(height: size.height * 0.02),
-                GoogleSignUpButton(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "You have an account?",
+                onChangedFunction: (value) =>
+                    context.read<BasicAuthBloc>().add(PasswordChanged(value)),
+              ),
+              SizedBox(height: size.height * 0.02),
+              ButtonWidget(
+                labelText: 'Sign Up',
+                onPressedFunction: () =>
+                    context.read<BasicAuthBloc>().add(FormSubmitted()),
+              ),
+              SizedBox(height: size.height * 0.02),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "You have an account?",
+                    style: TextStyle(
+                      color: Color.fromARGB(255, 146, 149, 154),
+                      fontSize: size.width * 0.03,
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, '/sign_in');
+                    },
+                    child: Text(
+                      " Sign In",
                       style: TextStyle(
-                        color: Color.fromARGB(255, 146, 149, 154),
-                        fontSize: size.width * 0.03,
+                        color: Color(0xFFFBAA1B),
                       ),
                     ),
-                    GestureDetector(
-                      onTap: () {},
-                      child: Text(
-                        " Sign In",
-                        style: TextStyle(
-                          color: Color(0xFFFBAA1B),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
       ),

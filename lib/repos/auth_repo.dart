@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthRepo {
   final _auth = FirebaseAuth.instance;
@@ -24,17 +23,17 @@ class AuthRepo {
     return null;
   }
 
-  Future<User?> signInWithGoogle() async {
+  Future<User?> signInWithEmailAndPassword(
+      String email, String password) async {
     try {
-      final googleUser = await GoogleSignIn().signIn();
-      if (googleUser == null) return null;
-      final googleAuth = await googleUser.authentication;
-      final credentials = GoogleAuthProvider.credential(
-          accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
-      final UserCredential = await _auth.signInWithCredential(credentials);
-      return UserCredential.user;
+      final userCredential = await _auth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      print(userCredential.user);
+      return userCredential.user;
     } catch (e) {
-      print(e);
+      print('Error during sign-in: $e');
     }
     return null;
   }

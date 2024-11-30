@@ -4,6 +4,7 @@ part of 'basic_auth_bloc.dart';
 sealed class BasicAuthEvent{}
 
 final class EmailChanged extends BasicAuthEvent{
+  
   final String email;
 
   EmailChanged(this.email);
@@ -16,4 +17,6 @@ final class PasswordChanged extends BasicAuthEvent{
 }
 
 final class FormSubmitted extends BasicAuthEvent{}
+
+final class SignInSubmitted extends BasicAuthEvent {}
 
