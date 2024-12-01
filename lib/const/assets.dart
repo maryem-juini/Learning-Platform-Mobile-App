@@ -3,4 +3,5 @@ class Assets{
   static const String logo = 'assets/logo.png';
   static const String googleLogo = 'assets/google_logo.png';
   static const String logo_white = 'assets/logo_white.png';
+  static const String logo_left_aligned = 'assets/logo_left_aligned.png';
 }

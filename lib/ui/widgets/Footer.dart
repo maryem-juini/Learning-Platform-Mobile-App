@@ -26,19 +26,19 @@ class BottomPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             IconStyle(
-              icon: Icons.home,
+              icon: Icons.home_rounded,
               index: 0,
               route: '/home',
               selectedIndex: selectedIndex,
             ),
             IconStyle(
-              icon: Icons.chat,
+              icon: Icons.question_answer_rounded,
               index: 1,
               route: '/chat_bot',
               selectedIndex: selectedIndex,
             ),
             IconStyle(
-              icon: Icons.question_answer,
+              icon: Icons.quiz_rounded,
               index: 2,
               route: '/quiz',
               selectedIndex: selectedIndex,

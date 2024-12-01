@@ -25,7 +25,7 @@ class _SignInPageState extends State<SignInPage> {
       child: Scaffold(
         body: BlocConsumer<BasicAuthBloc, BasicAuthState>(
           listener: (context, state) {
-            print('Form Status: ${state.formStatus}');
+            //print('Form Status: ${state.formStatus}');
             if (state.formStatus == FormStatus.success) {
               Navigator.pushNamedAndRemoveUntil(
                   context, '/home', (route) => false);
@@ -50,7 +50,6 @@ class _SignInPageState extends State<SignInPage> {
                   obscureText: false,
                   labelText: 'Email Address',
                   onChangedFunction: (value) {
-                    print('Email input changed: $value'); 
                     context.read<BasicAuthBloc>().add(EmailChanged(value));
                   },
                 ),
@@ -81,30 +80,7 @@ class _SignInPageState extends State<SignInPage> {
                   },
                 ),
                 SizedBox(height: size.height * 0.02),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Don't have an account?",
-                      style: TextStyle(
-                        color: Color.fromARGB(255, 146, 149, 154),
-                        fontSize: size.width * 0.03,
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.pushNamed(context, '/sign_up');
-                      },
-                      child: Text(
-                        " Sign Up",
-                        style: TextStyle(
-                          color: Color.fromARGB(255, 0, 0, 255),
-                          fontSize: size.width * 0.03,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                
               ],
             ),
           );

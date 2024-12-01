@@ -4,6 +4,7 @@ import 'package:learningplatform/blocs/basic_auth/basic_auth_bloc.dart';
 import 'package:learningplatform/repos/auth_repo.dart';
 import 'package:learningplatform/router/router.dart';
 import 'package:learningplatform/ui/homescreen.dart';
+import 'package:learningplatform/ui/signin.dart';
 import 'package:learningplatform/ui/signup.dart';
 import 'package:learningplatform/ui/splashscreen.dart';
 import 'blocs/chat/chat_bloc.dart';
@@ -20,6 +21,7 @@ Future<void> main() async {
       BlocProvider(
         create: (context) => BasicAuthBloc(AuthRepo()),
       ),
+      BlocProvider(create: (context) => ChatBloc()),
     ],
     child: const MyApp(),
   ));
@@ -37,9 +39,8 @@ class MyApp extends StatelessWidget {
       title: 'Learning Platform',
       home: BlocProvider(
         create: (context) => ChatBloc(),
-        child: HomePage(),
+        child: SignInPage(),
       ),
     );
   }
 }
-

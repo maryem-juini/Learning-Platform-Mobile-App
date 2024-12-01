@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:learningplatform/blocs/chat/chat_bloc.dart';
 import 'package:learningplatform/ui/widgets/Footer.dart';
+import 'package:learningplatform/ui/widgets/Header.dart';
 
 class ChatbotScreen extends StatefulWidget {
   const ChatbotScreen({super.key});
@@ -12,11 +13,12 @@ class ChatbotScreen extends StatefulWidget {
 
 class _ChatbotScreenState extends State<ChatbotScreen> {
   final TextEditingController _controller = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: BottomPage(selectedIndex: 1),
-      appBar: AppBar(title: const Text('ChatGPT App')),
+      appBar: HeaderWidget(),
       body: Column(
         children: [
           Expanded(
@@ -27,7 +29,36 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
                 } else if (state is ChatLoading) {
                   return const Center(child: CircularProgressIndicator());
                 } else if (state is ChatLoaded) {
-                  return Center(child: Text(state.response));
+                  return ListView.builder(
+                    itemCount: state.messages.length,
+                    itemBuilder: (context, index) {
+                      final message = state.messages[index];
+                      final isUser = message['role'] == 'user';
+
+                      return Align(
+                        alignment: isUser
+                            ? Alignment.centerRight
+                            : Alignment.centerLeft,
+                        child: Container(
+                          margin: const EdgeInsets.symmetric(
+                            vertical: 5,
+                            horizontal: 10,
+                          ),
+                          padding: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: isUser ? Colors.blue[100] : Colors.grey[200],
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Text(
+                            message['content'] ?? '',
+                            style: TextStyle(
+                              color: isUser ? Colors.black : Colors.black54,
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  );
                 } else if (state is ChatError) {
                   return Center(child: Text(state.error));
                 }
